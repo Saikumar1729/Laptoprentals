@@ -75,6 +75,9 @@ public class UserController {
 	                String token = jwtService.generateToken(login.getEmail());
 	                response.setToken(token);
 	                response.setIsLogged("yes");
+			     Optional<User> userOpt = userRepo.findByEmail(login.getEmail());
+                userOpt.ifPresent(user -> response.setRole(user.getRole().name()));
+
 	            }
 	        } catch (Exception e) {
 	            response.setToken(null);
